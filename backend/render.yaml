@@ -5,11 +5,12 @@ services:
     plan: free
     region: oregon
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn -w 2 -k gthread -b 0.0.0.0:$PORT app:app
+    startCommand: gunicorn -w 1 -k gthread --threads 2 --timeout 180 --graceful-timeout 180 --keep-alive 5 --max-requests 50 --max-requests-jitter 20 --preload app:app
     envVars:
       - key: KNOWLEDGE_BASE_PATH
         value: dataset.csv
       - key: CORS_ORIGINS
         value: "*"
+
 
 
