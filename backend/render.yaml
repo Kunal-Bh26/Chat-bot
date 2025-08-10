@@ -7,10 +7,20 @@ services:
     buildCommand: pip install -r requirements.txt && python -c "from fastembed import TextEmbedding; TextEmbedding('BAAI/bge-small-en-v1.5')"
     startCommand: gunicorn -w 1 -k gthread --threads 2 --timeout 180 --graceful-timeout 180 --keep-alive 5 --max-requests 50 --max-requests-jitter 20 --preload app:app
     envVars:
-      - key: KNOWLEDGE_BASE_PATH
-        value: dataset.csv
-      - key: CORS_ORIGINS
+  - key: KNOWLEDGE_BASE_PATH
+    value: dataset.csv
+  - key: CORS_ORIGINS
+    value: "*"
+  - key: OMP_NUM_THREADS
+    value: "1"
+  - key: OPENBLAS_NUM_THREADS
+    value: "1"
+  - key: MKL_NUM_THREADS
+    value: "1"
+  - key: NUMEXPR_NUM_THREADS
+    value: "1"
         value: "*"
+
 
 
 
